@@ -1,12 +1,10 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDTO } from './dto/create-song-dto';
 
 @Controller('songs')
 export class SongsController {
-    constructor(private songsService:SongsService){
-
-    }
+    constructor(private songsService:SongsService){}
     
     // use the CreateSongDTO to validate the incoming request body
     @Post()
@@ -28,17 +26,30 @@ export class SongsController {
     }
 
     @Get(':id')
-    findOne(){
-        return "find one song"
+    findOne(@Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ){
+    return `fetch song on the based on id ${typeof id}`;
     }
 
     @Put(':id')
-    update(){
+    update(@Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number){
         return 'update song'
     }
 
     @Delete(':id')
-    delete(){
+    delete(@Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number){
         return 'delete song'
     }
 }
