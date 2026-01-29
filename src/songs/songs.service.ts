@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Scope } from '@nestjs/common';
 
-@Injectable()
+@Injectable({scope:Scope.TRANSIENT})
 export class SongsService {
     // local db
     private readonly songs:any[] = [];
