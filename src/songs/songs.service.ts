@@ -3,9 +3,9 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class SongsService {
     // local db
-    private readonly songs:string[] = [];
+    private readonly songs:any[] = [];
     
-    create(song:string){
+    create(song:any){
         // save the songs in db
         this.songs.push(song);
         return this.songs;
