@@ -11,6 +11,7 @@ import { NestFactory } from '@nestjs/core';
 import { User } from './users/user.entity';
 import { Artist } from './artists/artist.entity';
 import { Playlist } from './playlists/playlist.entity';
+import { PlaylistModule } from './playlists/playlist.module';
 
 const devConfig = { port: 3000 };
 const proConfig = { port: 4000 };
@@ -27,7 +28,8 @@ const proConfig = { port: 4000 };
       entities: [Song,User,Artist,Playlist],
       synchronize: true,
     }),
-    SongsModule
+    SongsModule,
+    PlaylistModule
   ],
   controllers: [AppController],
   providers: [
