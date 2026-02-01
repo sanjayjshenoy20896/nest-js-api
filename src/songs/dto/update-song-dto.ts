@@ -1,4 +1,4 @@
-import { IsOptional, IsString,IsArray,IsDateString,IsMilitaryTime } from "class-validator";
+import { IsOptional, IsString,IsArray,IsDateString,IsMilitaryTime, IsNumber } from "class-validator";
 
 
 // songs module data transfer object for updating  a song
@@ -15,9 +15,10 @@ export class UpdateSongDto {
     readonly title:string;
 
     @IsOptional()
-    @IsArray()
-    @IsString({each:true})
-    readonly artists:string[];
+  @IsArray()
+  @IsNumber({}, { each: true })
+  readonly artists;
+
 
     @IsDateString() 
     @IsOptional() 
