@@ -10,6 +10,7 @@ import { Song } from './songs/song.entity';
 import { NestFactory } from '@nestjs/core';
 import { User } from './users/user.entity';
 import { Artist } from './artists/artist.entity';
+import { Playlist } from './playlists/playlist.entity';
 
 const devConfig = { port: 3000 };
 const proConfig = { port: 4000 };
@@ -23,7 +24,7 @@ const proConfig = { port: 4000 };
       username: 'postgres',
       password: 'sanjay@20896',
       database: 'n_test',
-      entities: [Song,User,Artist],
+      entities: [Song,User,Artist,Playlist],
       synchronize: true,
     }),
     SongsModule
