@@ -1,28 +1,30 @@
-import { IsArray, IsDateString, IsMilitaryTime, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString,IsArray,IsDateString,IsMilitaryTime } from "class-validator";
 
-// songs module data transfer object for creating a song
+
+// songs module data transfer object for updating  a song
 /**
  * Four fields—title, artists, releasedDate, duration—are present. 
 Class-validator enables the addition of decorator-based validations. The 
 isDateString() function is employed to validate the date, while isMilitaryTime() 
 is used for time validation in the HH:MM format. 
  */
-export class CreateSongDTO {
+export class UpdateSongDto {
+    
     @IsString()
-    @IsNotEmpty()
-    readonly title: string;
+    @IsOptional()
+    readonly title:string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsArray()
     @IsString({each:true})
     readonly artists:string[];
 
-    @IsNotEmpty()
-    @IsDateString()
-    readonly releasedDate: Date;
-
-    @IsMilitaryTime()
-    @IsNotEmpty()
+    @IsDateString() 
+    @IsOptional() 
+    readonly releasedDate: Date; 
+ 
+    @IsMilitaryTime() 
+    @IsOptional() 
     readonly duration: Date;
 
     @IsString()
