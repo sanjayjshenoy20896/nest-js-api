@@ -19,7 +19,7 @@ export class AuthController {
     }
 
     @Post('login')
-    login(@Body() loginDTO:LoginDTO):Promise<User>{
+    login(@Body() loginDTO:LoginDTO){
        return this.authService.findOne(loginDTO)
     }
 }
