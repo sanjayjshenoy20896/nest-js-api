@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDTO } from 'src/auth/dto/create-user.dto';
 import { LoginDTO } from 'src/auth/dto/login.dto';
 import * as bcrypt from "bcryptjs"
+import { UpdateResult } from 'typeorm/browser';
 
 
 
@@ -40,6 +41,20 @@ password from the user object
             throw new UnauthorizedException("Could not find the user")
         }
         return user;
-  }
+    }
+    async findById(userId:number):Promise<User>{
+        const user = await this.usersRepository.findOneBy({id:userId});
+        if(!user){
+            throw new UnauthorizedException("Could not find the user")
+        }
+        return user;
+    }
+
+    async updateSecret(userId:number,secret:string): Promise<UpdateResult>{
+        return this.usersRepository.update({id:userId},{twoFASecret:secret,enable2FA:true})        
+    }
+    async disable2FA(userId:number):Promise<UpdateResult>{
+        return this.usersRepository.update({id:userId},{enable2FA:false});
+    }
 }
 
