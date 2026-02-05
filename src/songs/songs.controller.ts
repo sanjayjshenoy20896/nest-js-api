@@ -1,4 +1,4 @@
-import { Body,Query, Controller, DefaultValuePipe, Delete, Get, HttpException, HttpStatus, Inject, Param, ParseIntPipe, Post, Put, Scope } from '@nestjs/common';
+import { Body,Query, Controller, DefaultValuePipe, Delete, Get, HttpException, HttpStatus, Inject, Param, ParseIntPipe, Post, Put, Scope, UseGuards, Request } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDTO } from './dto/create-song-dto';
 import type { Connection } from 'src/common/constants/connection';
@@ -6,6 +6,7 @@ import { UpdateSongDto } from './dto/update-song-dto';
 import { UpdateResult } from 'typeorm';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Song } from './song.entity';
+import { JwtArtistGuard } from 'src/auth/artists-jwt-guard';
 
 @Controller({path:'songs',scope:Scope.REQUEST})
 export class SongsController {
@@ -21,7 +22,8 @@ export class SongsController {
     
     // use the CreateSongDTO to validate the incoming request body
     @Post()
-    createSong(@Body() createSongDTO:CreateSongDTO){
+    @UseGuards(JwtArtistGuard)
+    createSong(@Body() createSongDTO:CreateSongDTO, @Request() req ){
        const results = this.songsService.create(createSongDTO);
        return results;
     }

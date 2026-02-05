@@ -6,9 +6,10 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { authConstants } from './auth.constants';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
+import { ArtistsModule } from 'src/artists/artists.module';
 
 @Module({
-   imports:[UsersModule,JwtModule.register({secret:authConstants.secret,signOptions:{expiresIn:'1d'}}),PassportModule],
+   imports:[UsersModule,JwtModule.register({secret:authConstants.secret,signOptions:{expiresIn:'1d'}}),PassportModule,ArtistsModule],
    controllers:[AuthController],
    providers:[AuthService,JwtStrategy],
    exports:[AuthService] 

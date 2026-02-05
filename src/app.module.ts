@@ -14,6 +14,7 @@ import { Playlist } from './playlists/playlist.entity';
 import { PlaylistModule } from './playlists/playlist.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { ArtistsModule } from './artists/artists.module';
 
 const devConfig = { port: 3000 };
 const proConfig = { port: 4000 };
@@ -33,7 +34,8 @@ const proConfig = { port: 4000 };
     SongsModule,
     PlaylistModule,
     AuthModule,
-    UsersModule
+    UsersModule,
+    ArtistsModule
   ],
   controllers: [AppController],
   providers: [
@@ -51,7 +53,7 @@ const proConfig = { port: 4000 };
     {
       provide: 'SONG_REPOSITORY',
       useFactory: () => AppDataSource.getRepository(Song),
-    }
+    },
   ],
 })
 export class AppModule implements NestModule {
