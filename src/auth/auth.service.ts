@@ -77,4 +77,8 @@ export class AuthService {
         }
         
     }
+
+    async validateUserByApiKey(apiKey:string):Promise<User>{
+        return this.userService.findUserByApiKey(apiKey);
+    }
 }

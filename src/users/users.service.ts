@@ -6,6 +6,7 @@ import { CreateUserDTO } from 'src/auth/dto/create-user.dto';
 import { LoginDTO } from 'src/auth/dto/login.dto';
 import * as bcrypt from "bcryptjs"
 import { UpdateResult } from 'typeorm/browser';
+import { v4 as uuid4 } from 'uuid';
 
 
 
@@ -28,9 +29,14 @@ password from the user object
  */
     // signup or register
     async createUser(userDto:CreateUserDTO):Promise<User>{
+       const userRecord = new User();
+       userRecord.firstName = userDto.firstName
+       userRecord.lastName = userDto.lastName
+       userRecord.email = userDto.email
+       userRecord.apiKey = uuid4()
        const salt = await bcrypt.genSalt();
-       userDto.password = await bcrypt.hash(userDto.password,salt);
-       const user = await this.usersRepository.save(userDto);
+       userRecord.password = await bcrypt.hash(userDto.password,salt);
+       const user = await this.usersRepository.save(userRecord);
        const { password, ...userWithoutPassword } = user;
        return userWithoutPassword as User;
     }
@@ -55,6 +61,14 @@ password from the user object
     }
     async disable2FA(userId:number):Promise<UpdateResult>{
         return this.usersRepository.update({id:userId},{enable2FA:false});
+    }
+
+    async findUserByApiKey(apiKey:string):Promise<User>{
+        const user = await this.usersRepository.findOneBy({apiKey})
+        if(!user){
+            throw new UnauthorizedException("Could not find the user")
+        }
+        return user;
     }
 }
 
